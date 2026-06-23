@@ -1,7 +1,19 @@
 version: "3.9"
 
+# ────────────────────────────────────────────────────────────────────
+# FleetGuard — 本地实验环境
+#
+# 启动后你会得到：
+#   - 1 个管控端（API + 前端）
+#   - 3 个员工容器（每个都是完整的"员工电脑"，可 exec 进去使用）
+#
+# 使用：
+#   docker compose up -d --build
+#   docker exec -it fleetguard-employee-alice bash   # 进入员工 A 的电脑
+# ────────────────────────────────────────────────────────────────────
+
 services:
-  # ── Infrastructure ──────────────────────────────────────────────
+  # ── 基础设施 ──────────────────────────────────────────────────
   postgres:
     image: postgres:16-alpine
     container_name: fleetguard-postgres
@@ -30,17 +42,19 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── FleetGuard Control Center ───────────────────────────────────
+  # ── 管控端 API ────────────────────────────────────────────────
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: fleetguard-api
     environment:
-      - DATABASE_URL=postgresql+asyncpg://fleetguard:fleetguard@postgres:5432/fleetguard
-      - REDIS_URL=redis://redis:6379/0
-      - JWT_SECRET=fleetguard-demo-secret-key-not-for-production
-      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000
-      - DEBUG=false
-      - LOG_LEVEL=INFO
+      DATABASE_URL: postgresql+asyncpg://fleetguard:fleetguard@postgres:5432/fleetguard
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: fleetguard-demo-secret-key-not-for-production
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
+      DEBUG: "false"
+      LOG_LEVEL: INFO
     ports:
       - "8000:8000"
     depends_on:
@@ -49,54 +63,59 @@ services:
       redis:
         condition: service_healthy
 
-  # ── Device Sidecars (3 simulated employee machines) ─────────────
-  sidecar-alice:
+  # ── 员工 Alice ────────────────────────────────────────────────
+  employee-alice:
     build:
       context: .
-      dockerfile: sidecar/Dockerfile
-    container_name: fleetguard-sidecar-alice
+      dockerfile: docker/employee/Dockerfile
+    container_name: fleetguard-employee-alice
     environment:
-      - FG_CONTROL_CENTER_URL=http://api:8000
-      - FG_ENROLLMENT_TOKEN=fget_demo-token-for-local-dev-0000000000
-      - FG_DEVICE_ID=fg-dev-alice-001
-      - FG_HOSTNAME=alice-macbook
-      - FG_USERNAME=alice
-      - FG_OS=macOS
+      FG_CONTROL_CENTER_URL: http://api:8000
+      FG_ENROLLMENT_TOKEN: fget_demo-token-for-local-dev-0000000000
+      FG_DEVICE_ID: fg-dev-alice-001
+      FG_HOSTNAME: alice-macbook
+      FG_USERNAME: alice
+      FG_OS: macOS
     depends_on:
       - api
-    restart: unless-stopped
+    stdin_open: true    # docker exec 需要
+    tty: true           # docker exec 需要
 
-  sidecar-bob:
+  # ── 员工 Bob ──────────────────────────────────────────────────
+  employee-bob:
     build:
       context: .
-      dockerfile: sidecar/Dockerfile
-    container_name: fleetguard-sidecar-bob
+      dockerfile: docker/employee/Dockerfile
+    container_name: fleetguard-employee-bob
     environment:
-      - FG_CONTROL_CENTER_URL=http://api:8000
-      - FG_ENROLLMENT_TOKEN=fget_demo-token-for-local-dev-0000000000
-      - FG_DEVICE_ID=fg-dev-bob-001
-      - FG_HOSTNAME=bob-thinkpad
-      - FG_USERNAME=bob
-      - FG_OS=Linux
+      FG_CONTROL_CENTER_URL: http://api:8000
+      FG_ENROLLMENT_TOKEN: fget_demo-token-for-local-dev-0000000000
+      FG_DEVICE_ID: fg-dev-bob-001
+      FG_HOSTNAME: bob-thinkpad
+      FG_USERNAME: bob
+      FG_OS: Linux
     depends_on:
       - api
-    restart: unless-stopped
+    stdin_open: true
+    tty: true
 
-  sidecar-carol:
+  # ── 员工 Carol ────────────────────────────────────────────────
+  employee-carol:
     build:
       context: .
-      dockerfile: sidecar/Dockerfile
-    container_name: fleetguard-sidecar-carol
+      dockerfile: docker/employee/Dockerfile
+    container_name: fleetguard-employee-carol
     environment:
-      - FG_CONTROL_CENTER_URL=http://api:8000
-      - FG_ENROLLMENT_TOKEN=fget_demo-token-for-local-dev-0000000000
-      - FG_DEVICE_ID=fg-dev-carol-001
-      - FG_HOSTNAME=carol-desktop
-      - FG_USERNAME=carol
-      - FG_OS=Windows
+      FG_CONTROL_CENTER_URL: http://api:8000
+      FG_ENROLLMENT_TOKEN: fget_demo-token-for-local-dev-0000000000
+      FG_DEVICE_ID: fg-dev-carol-001
+      FG_HOSTNAME: carol-desktop
+      FG_USERNAME: carol
+      FG_OS: Windows
     depends_on:
       - api
-    restart: unless-stopped
+    stdin_open: true
+    tty: true
 
 volumes:
   pgdata:
