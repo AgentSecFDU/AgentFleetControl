@@ -29,10 +29,19 @@ echo -e "${YELLOW}  Control Center: ${FG_CONTROL_CENTER_URL}${NC}"
 echo -e "${YELLOW}  Device ID:      ${FG_DEVICE_ID}${NC}"
 echo ""
 
+# ── 等待管控端就绪 ─────────────────────────────────────────────
+echo -e "${YELLOW}→ 等待管控端就绪...${NC}"
+for i in $(seq 1 60); do
+  if curl -s "${FG_CONTROL_CENTER_URL}/health" > /dev/null 2>&1; then
+    echo -e "${GREEN}  ✅ 管控端已就绪${NC}"
+    break
+  fi
+  sleep 2
+done
+
 # ── 自动获取注册令牌 ─────────────────────────────────────────────
 echo -e "${YELLOW}→ 获取注册令牌...${NC}"
 
-# Login as admin and create a fresh enrollment token
 ADMIN_RESP=$(curl -s -X POST "${FG_CONTROL_CENTER_URL}/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}')
@@ -45,11 +54,7 @@ if [ -n "$ADMIN_TOKEN" ]; then
   if [ -n "$NEW_TOKEN" ]; then
     export FG_ENROLLMENT_TOKEN="$NEW_TOKEN"
     echo -e "${GREEN}  ✅ 获取到注册令牌: ${NEW_TOKEN:0:20}...${NC}"
-  else
-    echo -e "${YELLOW}  ⚠️  无法创建注册令牌，使用默认值${NC}"
   fi
-else
-  echo -e "${YELLOW}  ⚠️  无法登录管控端，使用默认令牌${NC}"
 fi
 echo ""
 
