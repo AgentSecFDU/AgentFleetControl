@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FleetGuard — Centralized Runtime Governance for AI Agent Fleets</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a5f' }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .gradient-text { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+<!-- ── Nav ──────────────────────────────────────────────────────── -->
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur border-b border-slate-200 z-50">
+  <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+    <span class="font-bold text-lg text-brand-700">FleetGuard</span>
+    <div class="flex gap-6 text-sm text-slate-600">
+      <a href="#features" class="hover:text-brand-600 transition-colors">Features</a>
+      <a href="#architecture" class="hover:text-brand-600 transition-colors">Architecture</a>
+      <a href="https://github.com/AgentSecFDU/FleetGuard" class="hover:text-brand-600 transition-colors">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
+<section class="pt-32 pb-20 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-block mb-4 px-3 py-1 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold tracking-wide uppercase">
+      Research Prototype &middot; arXiv Coming Soon
+    </div>
+    <h1 class="text-5xl font-extrabold tracking-tight mb-6">
+      <span class="gradient-text">Centralized Runtime Governance</span><br>
+      <span class="text-slate-900">for Local AI Agent Fleets</span>
+    </h1>
+    <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-8 leading-relaxed">
+      FleetGuard is an enterprise management platform that brings AI agents under centralized control.
+      Intercept dangerous tool calls, enforce policies, detect prompt injection, audit every action —
+      <strong>before</strong> damage happens.
+    </p>
+    <div class="flex justify-center gap-4">
+      <a href="https://github.com/AgentSecFDU/FleetGuard" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+      <a href="#architecture" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-100 transition-colors">
+        How it works →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ─────────────────────────────────────────────────── -->
+<section id="features" class="py-20 px-6 bg-white border-y border-slate-200">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12">What FleetGuard Does</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">Pre-Execution Interception</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Every tool call is evaluated <em>before</em> it executes. Dangerous commands like <code class="bg-slate-100 px-1 rounded text-xs">curl | sh</code> are blocked in real time — not detected after the fact.</p>
+      </div>
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">Prompt Injection Detection</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Scans untrusted input for injection patterns. Even if the agent is tricked, the external policy boundary prevents real harm from occurring.</p>
+      </div>
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">Approval Workflow</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">High-risk operations require admin approval. Files like <code class="bg-slate-100 px-1 rounded text-xs">~/.ssh/id_rsa</code> trigger a pause — the agent waits until you say yes or no.</p>
+      </div>
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">One-Click Quarantine</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Isolate a device instantly. Shell, network, and plugin operations are all blocked. The device continues to report status but can do no harm.</p>
+      </div>
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">Offline Resilience</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Policy is cached locally. Even when the Control Center is unreachable, the Sidecar enforces the last known policy. Events queue up and replay on reconnect.</p>
+      </div>
+
+      <div class="p-6 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors">
+        <div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3 class="font-semibold mb-2">Full Audit Trail</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Every tool call, every policy decision, every admin action is recorded. Answerable. Auditable. Explainable.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Architecture ──────────────────────────────────────────────── -->
+<section id="architecture" class="py-20 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12">Architecture</h2>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-8 overflow-x-auto">
+      <svg viewBox="0 0 820 420" class="w-full max-w-3xl mx-auto" style="font-family: system-ui, sans-serif; font-size: 12px;">
+        <!-- Employee Machine A -->
+        <rect x="10" y="10" width="250" height="190" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="135" y="34" text-anchor="middle" fill="#64748b" font-weight="600">Employee Machine A</text>
+
+        <rect x="25" y="50" width="220" height="65" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+        <text x="135" y="70" text-anchor="middle" fill="#1d4ed8" font-weight="600">OpenClaw Gateway</text>
+        <rect x="45" y="80" width="180" height="25" rx="4" fill="#dbeafe"/>
+        <text x="135" y="97" text-anchor="middle" fill="#1e40af" font-size="11">+ FleetGuard Plugin</text>
+
+        <rect x="25" y="125" width="220" height="55" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+        <text x="135" y="145" text-anchor="middle" fill="#166534" font-weight="600">FleetGuard Sidecar</text>
+        <text x="135" y="165" text-anchor="middle" fill="#166534" font-size="10">Policy cache · Event queue · Heartbeat</text>
+
+        <text x="25" y="210" fill="#94a3b8" font-size="10">localhost:18900 ← Plugin calls Sidecar</text>
+
+        <!-- Employee B, C (compact) -->
+        <text x="80" y="250" text-anchor="middle" fill="#64748b" font-size="11">Employee B</text>
+        <rect x="30" y="258" width="100" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="80" y="278" text-anchor="middle" fill="#334155" font-size="10">Sidecar + Plugin</text>
+
+        <text x="200" y="250" text-anchor="middle" fill="#64748b" font-size="11">Employee C</text>
+        <rect x="150" y="258" width="100" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="200" y="278" text-anchor="middle" fill="#334155" font-size="10">Sidecar + Plugin</text>
+
+        <!-- Arrows from employees to center -->
+        <line x1="250" y1="100" x2="370" y2="100" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="250" y1="275" x2="370" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="250" y1="275" x2="370" y2="200" stroke="#cbd5e1" stroke-width="1.5" transform="translate(0,70)"/>
+
+        <text x="310" y="60" text-anchor="middle" fill="#94a3b8" font-size="9">HTTPS + Token</text>
+
+        <!-- Control Center -->
+        <rect x="370" y="40" width="440" height="280" rx="12" fill="#ffffff" stroke="#6366f1" stroke-width="2"/>
+        <text x="590" y="65" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="14">FleetGuard Control Center</text>
+
+        <rect x="390" y="85" width="190" height="45" rx="6" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1"/>
+        <text x="485" y="102" text-anchor="middle" fill="#7c3aed" font-weight="600">API Server</text>
+        <text x="485" y="118" text-anchor="middle" fill="#7c3aed" font-size="10">REST + WebSocket · Port 8000</text>
+
+        <rect x="600" y="85" width="190" height="45" rx="6" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1"/>
+        <text x="695" y="102" text-anchor="middle" fill="#7c3aed" font-weight="600">Web Dashboard</text>
+        <text x="695" y="118" text-anchor="middle" fill="#7c3aed" font-size="10">React + Ant Design · 8 Pages</text>
+
+        <rect x="390" y="145" width="400" height="55" rx="6" fill="#fefce8" stroke="#fde047" stroke-width="1"/>
+        <text x="590" y="163" text-anchor="middle" fill="#854d0e" font-weight="600">Risk Engine + Policy Engine</text>
+        <text x="590" y="180" text-anchor="middle" fill="#854d0e" font-size="10">5 Risk Rules · YAML Policy · ML-Ready Interface</text>
+
+        <rect x="390" y="215" width="190" height="40" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+        <text x="485" y="232" text-anchor="middle" fill="#475569" font-weight="600">PostgreSQL</text>
+        <text x="485" y="246" text-anchor="middle" fill="#64748b" font-size="10">8 Tables</text>
+
+        <rect x="600" y="215" width="190" height="40" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+        <text x="695" y="232" text-anchor="middle" fill="#475569" font-weight="600">Redis</text>
+        <text x="695" y="246" text-anchor="middle" fill="#64748b" font-size="10">Pub/Sub + Cache</text>
+
+        <rect x="390" y="268" width="400" height="35" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="590" y="290" text-anchor="middle" fill="#64748b" font-size="10">Approval Center · Audit Store · Quarantine Controller</text>
+
+        <!-- Admin browser -->
+        <rect x="820" y="160" width="180" height="50" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="910" y="182" text-anchor="middle" fill="#475569" font-size="11">👩‍💻 Admin Browser</text>
+        <text x="910" y="198" text-anchor="middle" fill="#94a3b8" font-size="10">Dashboard + Management</text>
+        <line x1="810" y1="120" x2="820" y2="175" stroke="#cbd5e1" stroke-width="1.2"/>
+
+        <!-- Arrow marker -->
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#94a3b8"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ── Threat Model ──────────────────────────────────────────────── -->
+<section class="py-20 px-6 bg-white border-y border-slate-200">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-4">Threat Model</h2>
+    <p class="text-center text-slate-500 mb-12">Five attack surfaces that FleetGuard protects against</p>
+    <div class="grid md:grid-cols-5 gap-4">
+      <div class="text-center p-4">
+        <div class="text-2xl mb-2">🪝</div>
+        <h4 class="font-semibold text-sm mb-1">Prompt Injection</h4>
+        <p class="text-xs text-slate-400">Malicious instructions embedded in web pages, emails, or tool results</p>
+      </div>
+      <div class="text-center p-4">
+        <div class="text-2xl mb-2">💣</div>
+        <h4 class="font-semibold text-sm mb-1">Dangerous Shell</h4>
+        <p class="text-xs text-slate-400">Remote script execution, privilege escalation, system destruction</p>
+      </div>
+      <div class="text-center p-4">
+        <div class="text-2xl mb-2">📤</div>
+        <h4 class="font-semibold text-sm mb-1">Data Exfiltration</h4>
+        <p class="text-xs text-slate-400">Sensitive files sent to external domains, email, or pastebin</p>
+      </div>
+      <div class="text-center p-4">
+        <div class="text-2xl mb-2">🧬</div>
+        <h4 class="font-semibold text-sm mb-1">Persistence</h4>
+        <p class="text-xs text-slate-400">Agent memory poisoning, plugin install, cron job creation</p>
+      </div>
+      <div class="text-center p-4">
+        <div class="text-2xl mb-2">🔄</div>
+        <h4 class="font-semibold text-sm mb-1">Policy Drift</h4>
+        <p class="text-xs text-slate-400">Local configuration tampering to escape centralized governance</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────────────── -->
+<section class="py-20 px-6">
+  <div class="max-w-2xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4">Open Source & Research</h2>
+    <p class="text-slate-500 mb-8 leading-relaxed">
+      FleetGuard is a research prototype from Fudan University. The code is open source under MIT license.
+      A paper describing the system design and threat model is forthcoming on arXiv.
+    </p>
+    <div class="flex justify-center gap-4">
+      <a href="https://github.com/AgentSecFDU/FleetGuard" class="px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors">GitHub Repository</a>
+      <a href="https://github.com/AgentSecFDU/FleetGuard#readme" class="px-6 py-3 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-100 transition-colors">Documentation</a>
+    </div>
+    <p class="mt-6 text-sm text-slate-400">
+      Maintained by <a href="https://github.com/AgentSecFDU" class="text-brand-600 hover:underline">AgentSecFDU</a>
+      &middot; Built with Python, FastAPI, React, Ant Design
+    </p>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer class="py-8 px-6 border-t border-slate-200 bg-white">
+  <div class="max-w-6xl mx-auto text-center text-sm text-slate-400">
+    FleetGuard &copy; 2026 &middot; Fudan University &middot; MIT License
+  </div>
+</footer>
+
+</body>
+</html>

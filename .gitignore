@@ -35,3 +35,6 @@ package-lock.json
 # Frontend
 frontend/dist/
 frontend/node_modules/
+
+# Paper (separate Overleaf repository)
+FleetGuard-paper/
