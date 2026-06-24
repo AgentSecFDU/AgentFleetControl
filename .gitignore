@@ -38,3 +38,6 @@ frontend/node_modules/
 
 # Paper (separate Overleaf repository)
 FleetGuard-paper/
+
+# Patent (separate, not for public repo)
+FleetGuard-Patent/

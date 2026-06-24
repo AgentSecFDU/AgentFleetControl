@@ -34,6 +34,7 @@ echo ""
 # ── 启动 Sidecar（后台）────────────────────────────────────────────
 echo -e "${GREEN}→ 启动 FleetGuard Sidecar...${NC}"
 cd /opt/fleetguard/sidecar
+export PYTHONPATH="/opt/fleetguard/sidecar/src:$PYTHONPATH"
 uv run python -m fleetguard_sidecar.main --api-port 18900 &
 SIDECAR_PID=$!
 
