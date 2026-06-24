@@ -20,4 +20,6 @@ COPY scripts/seed.py ./scripts/
 
 EXPOSE 8000
 
+ENV PYTHONPATH=/app/src
+
 CMD ["sh", "-c", "uv run alembic upgrade head 2>/dev/null; uv run python scripts/seed.py; uv run uvicorn fleetguard.main:app --host 0.0.0.0 --port 8000"]

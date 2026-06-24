@@ -2,8 +2,6 @@
 # ────────────────────────────────────────────────────────────────────
 # 员工容器入口 — 启动 Sidecar + 保持容器运行
 # ────────────────────────────────────────────────────────────────────
-set -e
-
 GREEN='\033[0;32m'; CYAN='\033[0;36m'; YELLOW='\033[1;33m'; NC='\033[0m'
 
 echo -e "${CYAN}"
@@ -70,5 +68,16 @@ echo ""
 echo "容器运行中。docker exec -it <容器名> bash 进入。"
 echo ""
 
-# 如果 Sidecar 挂了，容器也退出（方便 docker compose 管理）
-wait $SIDECAR_PID
+# Keep container alive even if sidecar exits (for debugging)
+# Restart sidecar if it dies
+while true; do
+  if ! kill -0 $SIDECAR_PID 2>/dev/null; then
+    echo "⚠️  Sidecar stopped, restarting in 5s..."
+    sleep 5
+    cd /opt/fleetguard/sidecar
+    export PYTHONPATH="/opt/fleetguard/sidecar/src:$PYTHONPATH"
+    uv run python -m fleetguard_sidecar.main --api-port 18900 &
+    SIDECAR_PID=$!
+  fi
+  sleep 10
+done
