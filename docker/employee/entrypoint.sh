@@ -29,6 +29,30 @@ echo -e "${YELLOW}  Control Center: ${FG_CONTROL_CENTER_URL}${NC}"
 echo -e "${YELLOW}  Device ID:      ${FG_DEVICE_ID}${NC}"
 echo ""
 
+# ── 自动获取注册令牌 ─────────────────────────────────────────────
+echo -e "${YELLOW}→ 获取注册令牌...${NC}"
+
+# Login as admin and create a fresh enrollment token
+ADMIN_RESP=$(curl -s -X POST "${FG_CONTROL_CENTER_URL}/api/v1/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin123"}')
+ADMIN_TOKEN=$(echo "$ADMIN_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))" 2>/dev/null || echo "")
+
+if [ -n "$ADMIN_TOKEN" ]; then
+  ENROLL_RESP=$(curl -s -X POST "${FG_CONTROL_CENTER_URL}/api/v1/auth/enrollment-token" \
+    -H "Authorization: Bearer ${ADMIN_TOKEN}")
+  NEW_TOKEN=$(echo "$ENROLL_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin).get('token',''))" 2>/dev/null || echo "")
+  if [ -n "$NEW_TOKEN" ]; then
+    export FG_ENROLLMENT_TOKEN="$NEW_TOKEN"
+    echo -e "${GREEN}  ✅ 获取到注册令牌: ${NEW_TOKEN:0:20}...${NC}"
+  else
+    echo -e "${YELLOW}  ⚠️  无法创建注册令牌，使用默认值${NC}"
+  fi
+else
+  echo -e "${YELLOW}  ⚠️  无法登录管控端，使用默认令牌${NC}"
+fi
+echo ""
+
 # ── 启动 Sidecar（后台）────────────────────────────────────────────
 echo -e "${GREEN}→ 启动 FleetGuard Sidecar...${NC}"
 cd /opt/fleetguard/sidecar
