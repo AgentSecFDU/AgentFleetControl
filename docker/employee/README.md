@@ -25,45 +25,19 @@ docker exec -it fleetguard-employee-alice bash
 
 OpenClaw 已全局安装，Plugin 已就位。在启动 OpenClaw Gateway 之前，需要配置 API Key。
 
-### 方式一：配置助手脚本（推荐）
+### 方式一：openclaw onboard（推荐）
 
-进入容器后运行：
+进入容器后运行 OpenClaw 自带的配置向导：
 
 ```bash
-setup-openclaw
+openclaw onboard
 ```
 
-交互式引导，支持以下提供商：
+交互式引导，支持 Anthropic、OpenAI、OpenRouter、Google Gemini 等多个提供商。
 
-| 序号 | 提供商 | 说明 |
-|------|--------|------|
-| 1 | Anthropic | Claude 系列 |
-| 2 | OpenAI | GPT 系列 |
-| 3 | OpenRouter | ★推荐：一个 Key 访问所有模型 |
-| 4 | Google Gemini | Gemini 系列 |
-| 5 | DeepSeek | DeepSeek V3 / R1 |
-| 6 | 自定义 | OpenAI 兼容 API 平台（国内大模型、本地 LLM 等） |
+### 方式二：手动写配置文件
 
-脚本会自动生成 `~/.openclaw/openclaw.json` 和 `~/.openclaw/.env`。
-
-### 方式二：docker-compose 环境变量
-
-在 `docker-compose.yml` 中取消注释并填入你的 API Key：
-
-```yaml
-employee-alice:
-  environment:
-    OPENCLAW_PROVIDER: openrouter
-    OPENCLAW_API_KEY: sk-or-xxx
-    OPENCLAW_MODEL: openrouter/anthropic/claude-sonnet-4
-    # OPENCLAW_BASE_URL: https://your-custom-api.com/v1  # 自定义平台时需要
-```
-
-容器启动时会自动检测 `OPENCLAW_API_KEY` 并完成配置。
-
-### 方式三：手动配置
-
-直接编辑配置文件，适合高级用户：
+容器内已预置了配置模板，直接编辑填入 Key 即可：
 
 ```bash
 # API Key

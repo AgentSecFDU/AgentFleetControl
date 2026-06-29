@@ -38,8 +38,6 @@ RUN mkdir -p /root/.openclaw/extensions
 
 # ── OpenClaw 配置模板 ───────────────────────────────────────────────
 COPY docker/employee/openclaw/ /root/.openclaw/
-COPY docker/employee/setup-openclaw.sh /usr/local/bin/setup-openclaw
-RUN chmod +x /usr/local/bin/setup-openclaw
 
 # ── 安装 FleetGuard Sidecar ─────────────────────────────────────────
 COPY sidecar/ /opt/fleetguard/sidecar/

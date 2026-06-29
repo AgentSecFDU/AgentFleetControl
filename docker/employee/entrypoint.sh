@@ -20,12 +20,6 @@ export FG_HOSTNAME="${FG_HOSTNAME:-$(hostname)}"
 export FG_USERNAME="${FG_USERNAME:-employee}"
 export FG_OS="${FG_OS:-Linux}"
 
-# 导出 OpenClaw 配置环境变量（如果通过 docker-compose 传入）
-export OPENCLAW_PROVIDER="${OPENCLAW_PROVIDER:-}"
-export OPENCLAW_API_KEY="${OPENCLAW_API_KEY:-}"
-export OPENCLAW_MODEL="${OPENCLAW_MODEL:-}"
-export OPENCLAW_BASE_URL="${OPENCLAW_BASE_URL:-}"
-
 # 如果还没注册过，生成 device_id
 if [ -z "$FG_DEVICE_ID" ]; then
   export FG_DEVICE_ID="fg-dev-$(hostname)-$(date +%s | tail -c5)"
@@ -82,29 +76,19 @@ else
 fi
 echo ""
 
-# ── OpenClaw 自动配置 ──────────────────────────────────────────────
+# ── OpenClaw 配置检查 ──────────────────────────────────────────────
 OC_CONFIGURED=false
 
-# 如果通过环境变量传入了 API Key，自动配置 OpenClaw
-if [ -n "${OPENCLAW_API_KEY:-}" ]; then
-  echo -e "${YELLOW}→ 检测到 OPENCLAW_API_KEY，自动配置 OpenClaw...${NC}"
-  if setup-openclaw --non-interactive 2>&1; then
-    OC_CONFIGURED=true
-    echo -e "${GREEN}  ✅ OpenClaw 已自动配置${NC}"
-  else
-    echo -e "${YELLOW}  ⚠️  自动配置失败，请手动运行 setup-openclaw${NC}"
-  fi
-# 如果已经配置过（存在 config 文件），跳过
-elif [ -f "${HOME}/.openclaw/openclaw.json" ] && [ -f "${HOME}/.openclaw/.env" ]; then
-  # 检查 .env 里是否有实际的 key（非空值、非模板占位符）
+# 检查是否已配置（.env 文件中有实际的 API Key）
+if [ -f "${HOME}/.openclaw/.env" ]; then
   if grep -qE '^[A-Z_]+=sk-|^[A-Z_]+=gsk_|^[A-Z_]+=xai-' "${HOME}/.openclaw/.env" 2>/dev/null; then
     OC_CONFIGURED=true
     echo -e "${GREEN}  ✅ OpenClaw 已配置${NC}"
   else
-    echo -e "${YELLOW}  ⚠️  OpenClaw 配置文件存在但未检测到 API Key${NC}"
+    echo -e "${YELLOW}  ⚠️  OpenClaw 未配置，请运行 openclaw onboard${NC}"
   fi
 else
-  echo -e "${YELLOW}  ⚠️  OpenClaw 未配置，请运行 setup-openclaw 进行设置${NC}"
+  echo -e "${YELLOW}  ⚠️  OpenClaw 未配置，请运行 openclaw onboard${NC}"
 fi
 echo ""
 
@@ -114,7 +98,7 @@ if [ "$OC_CONFIGURED" = true ]; then
   OC_LINE2="  启动: openclaw gateway start"
 else
   OC_LINE1="OpenClaw:   ⚠️  未配置"
-  OC_LINE2="  配置: setup-openclaw"
+  OC_LINE2="  配置: openclaw onboard"
 fi
 
 echo -e "${GREEN}╔══════════════════════════════════════════════════════╗${NC}"
