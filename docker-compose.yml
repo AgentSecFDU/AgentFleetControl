@@ -74,6 +74,11 @@ services:
       FG_HOSTNAME: alice-macbook
       FG_USERNAME: alice
       FG_OS: macOS
+      # ── OpenClaw 配置（可选，取消注释并填入你的 API Key）──
+      # OPENCLAW_PROVIDER: openrouter
+      # OPENCLAW_API_KEY: sk-or-...
+      # OPENCLAW_MODEL: openrouter/anthropic/claude-sonnet-4
+      # OPENCLAW_BASE_URL: https://your-custom-api.com/v1   # 仅自定义平台需要
     depends_on:
       - api
     stdin_open: true    # docker exec 需要
@@ -92,6 +97,11 @@ services:
       FG_HOSTNAME: bob-thinkpad
       FG_USERNAME: bob
       FG_OS: Linux
+      # ── OpenClaw 配置（可选，取消注释并填入你的 API Key）──
+      # OPENCLAW_PROVIDER: openrouter
+      # OPENCLAW_API_KEY: sk-or-...
+      # OPENCLAW_MODEL: openrouter/anthropic/claude-sonnet-4
+      # OPENCLAW_BASE_URL: https://your-custom-api.com/v1
     depends_on:
       - api
     stdin_open: true
@@ -110,6 +120,11 @@ services:
       FG_HOSTNAME: carol-desktop
       FG_USERNAME: carol
       FG_OS: Windows
+      # ── OpenClaw 配置（可选，取消注释并填入你的 API Key）──
+      # OPENCLAW_PROVIDER: openrouter
+      # OPENCLAW_API_KEY: sk-or-...
+      # OPENCLAW_MODEL: openrouter/anthropic/claude-sonnet-4
+      # OPENCLAW_BASE_URL: https://your-custom-api.com/v1
     depends_on:
       - api
     stdin_open: true

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.openclaw.ai/openclaw.json",
+  "env": {
+    "ANTHROPIC_API_KEY": "",
+    "OPENAI_API_KEY": "",
+    "OPENROUTER_API_KEY": "",
+    "GEMINI_API_KEY": "",
+    "OPENAI_BASE_URL": ""
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/anthropic/claude-sonnet-4",
+        "fallbacks": [
+          "openrouter/google/gemini-2.5-flash",
+          "openrouter/deepseek/deepseek-chat"
+        ]
+      },
+      "models": {
+        "openrouter/anthropic/claude-sonnet-4": {
+          "alias": "Claude Sonnet 4"
+        },
+        "openrouter/anthropic/claude-opus-4": {
+          "alias": "Claude Opus 4"
+        },
+        "openrouter/openai/gpt-4o": {
+          "alias": "GPT-4o"
+        },
+        "openrouter/google/gemini-2.5-pro": {
+          "alias": "Gemini 2.5 Pro"
+        },
+        "openrouter/google/gemini-2.5-flash": {
+          "alias": "Gemini 2.5 Flash"
+        },
+        "openrouter/deepseek/deepseek-chat": {
+          "alias": "DeepSeek V3"
+        },
+        "openrouter/deepseek/deepseek-reasoner": {
+          "alias": "DeepSeek R1"
+        }
+      },
+      "compaction": {
+        "auto": true,
+        "threshold": 0.8
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local"
+  }
+}
