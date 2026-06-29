@@ -1,15 +1,25 @@
 /**
- * FleetGuard Plugin for OpenClaw Gateway
- * =======================================
+ * FleetGuard Plugin — Runtime-Agnostic Agent Governance
+ * ======================================================
  *
- * Entry point — registers hooks with OpenClaw and orchestrates
- * the governance flow: intercept → evaluate → decide → enforce.
+ * Two APIs:
+ *
+ * 1. NEW (recommended): FleetGuardPlugin core + AgentRuntimeAdapter
+ *    import { FleetGuardPlugin } from 'fleetguard-plugin/core/plugin';
+ *    import { OpenClawAdapter } from 'fleetguard-plugin/adapters/openclaw';
+ *    import { HermesAdapter }  from 'fleetguard-plugin/adapters/hermes';
+ *
+ *    const plugin = new FleetGuardPlugin({ sidecarUrl: 'http://127.0.0.1:18900' });
+ *    await plugin.initialize();
+ *    const adapter = new OpenClawAdapter(plugin);
+ *    await adapter.load();
+ *
+ * 2. LEGACY: direct hook exports (backward compatible with existing OpenClaw setup)
+ *    import plugin from 'fleetguard-plugin';
+ *    // plugin.hooks.before_tool_call(...) etc.
  *
  * Architecture:
- *   OpenClaw Hook → Plugin Hook Handler → SidecarClient → local Sidecar → Control Center
- *
- * Session state is tracked per-session to accumulate risk context
- * (e.g., if a session saw untrusted input, subsequent tool calls get higher risk scores).
+ *   Agent Runtime Hook → Adapter → FleetGuardPlugin Core → SidecarClient → local Sidecar → Control Center
  */
 
 import { SidecarClient } from './client/sidecarClient.js';
